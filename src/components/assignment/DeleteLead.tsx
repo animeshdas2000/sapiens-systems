@@ -9,14 +9,15 @@ function DeleteLead({ id }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log(id);
 
   if (error) {
     console.log(error);
   }
   return (
     <>
-      <span onClick={handleShow}>Delete</span>
+      <Button variant="danger" onClick={handleShow}>
+        Delete
+      </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Lead</Modal.Title>
@@ -30,7 +31,7 @@ function DeleteLead({ id }) {
                   id,
                 },
               });
-              window.location.href = "/assingment";
+              window.location.reload();
             }}>
             Delete
           </Button>

@@ -1,19 +1,25 @@
 import { useQuery } from "@apollo/client";
 import { GET_LEADS } from "./queries";
+import React from "react";
 // import TableComp from "../../components/Table";
 import Table from "react-bootstrap/Table";
-import kebabMenu from "../../assets/kebab.svg";
+import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import UpdateLead from "../../components/assignment/UpdateLead";
 import DeleteLead from "../../components/assignment/DeleteLead";
+import CreateLead from "../../components/assignment/CreateLead";
+
 function Assingment() {
   const { loading, error, data } = useQuery(GET_LEADS);
 
-  console.log(data);
   if (loading) return <>Loading...</>;
   if (error) return <>Error! ${error.message}</>;
   return (
     <>
+      <div className="p-4 m-auto center">
+        <h2>Create New lead</h2> <CreateLead />
+      </div>
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -25,28 +31,31 @@ function Assingment() {
           </tr>
         </thead>
         <tbody>
-          {data.leads?.data.map((val) => {
+          {data.leads?.data.map((val: any) => {
             return (
-              <tr>
+              <tr key={val.id}>
                 <td>{val.attributes.Name}</td>
                 <td>{val.attributes.Source}</td>
                 <td>{val.attributes.Status}</td>
                 <td>{val.attributes.Time}</td>
                 <td>{val.attributes.email}</td>
                 <td>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="primary">
-                      {<img src={kebabMenu} alt="" width="20px" />}
+                  <UpdateLead id={val.id} />
+                  <DeleteLead id={val.id} />
+                  {/* <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      Dropdown Button
                     </Dropdown.Toggle>
+
                     <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <DeleteLead id={val.id} />
-                      </Dropdown.Item>
                       <Dropdown.Item>
                         <UpdateLead id={val.id} />
                       </Dropdown.Item>
+                      <Dropdown.Item>
+                        <DeleteLead id={val.id} />
+                      </Dropdown.Item>
                     </Dropdown.Menu>
-                  </Dropdown>
+                  </Dropdown> */}
                 </td>
               </tr>
             );
