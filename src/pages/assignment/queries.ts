@@ -54,3 +54,20 @@ export const UPDATE_LEAD = gql`
     }
   }
 `;
+
+export const VIEW_LEAD = gql`
+  query getLeadById($id: ID!) {
+    lead(id: $id) {
+      data {
+        id
+        attributes {
+          Time
+          Name
+          email
+          Source
+          Status
+        }
+      }
+    }
+  }
+`;

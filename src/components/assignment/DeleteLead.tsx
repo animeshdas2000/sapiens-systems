@@ -15,9 +15,7 @@ function DeleteLead({ id }) {
   }
   return (
     <>
-      <Button variant="danger" onClick={handleShow}>
-        Delete
-      </Button>
+      <span onClick={handleShow}>Delete</span>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Lead</Modal.Title>

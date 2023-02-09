@@ -9,7 +9,7 @@ function UpdateLead({ id }) {
   console.log(id);
   const [show, setShow] = useState(false);
 
-  const [updateLead, { error, loading }] = useMutation(UPDATE_LEAD);
+  const [updateLead, { error }] = useMutation(UPDATE_LEAD);
   const schema: RJSFSchema = {
     type: "object",
     properties: {
@@ -18,9 +18,13 @@ function UpdateLead({ id }) {
       },
       Source: {
         type: "string",
+        default: "google",
+        enum: ["google", "website", "my_app", "word_of_mouth"],
       },
       Status: {
         type: "string",
+        default: "New",
+        enum: ["New", "Interested", "Follow_up", "Negative", "Enrolled"],
       },
       Time: {
         type: "string",
@@ -51,6 +55,7 @@ function UpdateLead({ id }) {
         },
       },
     });
+    handleClose();
     window.location.reload();
   };
 
@@ -59,16 +64,20 @@ function UpdateLead({ id }) {
   }
   return (
     <div>
-      <Button variant="primary" onClick={handleShow}>
-        Edit
-      </Button>
+      <span onClick={handleShow}>Edit</span>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Lead</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form schema={schema} onSubmit={onSubmit} />
+          <Form
+            schema={schema}
+            onSubmit={onSubmit}
+            onError={(e) => {
+              console.log(e);
+            }}
+          />
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>

@@ -16,9 +16,13 @@ const schema: RJSFSchema = {
     },
     Source: {
       type: "string",
+      default: "google",
+      enum: ["google", "website", "my_app", "word_of_mouth"],
     },
     Status: {
       type: "string",
+      default: "New",
+      enum: ["New", "Interested", "Follow_up", "Negative", "Enrolled"],
     },
     Time: {
       type: "string",
@@ -50,15 +54,16 @@ function CreateLead() {
     createLead({
       variables: { data: { Name, email, Status, Source, date, Time, Notes } },
     });
+    window.location.reload();
   };
   return (
     <div>
       <Button variant="primary" onClick={handleShow}>
-        Create
+        Add Lead
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create Lead</Modal.Title>
+          <Modal.Title>Add Lead</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form schema={schema} onSubmit={onSubmit} />
